@@ -11,6 +11,7 @@ import java.util.Set;
 @AllArgsConstructor
 @RequiredArgsConstructor
 public class User {
+
     @Id
     private long id;
     private String fullName;
@@ -23,4 +24,9 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     private Set<UserRoleHasUser> userRoleHasUsers;
+
+    @OneToMany(mappedBy = "user")
+    private Set<UserHasAdvertisements> userHasAdvertisements;
+
+
 }

@@ -7,10 +7,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class RequestAdvertisementDto {
-    private Long id;
-    private String title;
+public class RequestSubCategoryDto {
+    private long id;
+    private String name;
     private String description;
-    private Long category;
-    private Long subCategory;
+    private long categoryId;
 }

@@ -1,9 +1,7 @@
 package com.LRITechnologies.Ads_Site.controller;
 
-import com.LRITechnologies.Ads_Site.dto.request.RequestAdvertisementDto;
-import com.LRITechnologies.Ads_Site.entity.User;
-import com.LRITechnologies.Ads_Site.service.AdvertisementService;
-import com.LRITechnologies.Ads_Site.service.UserService;
+import com.LRITechnologies.Ads_Site.dto.request.RequestCategoryDto;
+import com.LRITechnologies.Ads_Site.service.CategoriesService;
 import com.LRITechnologies.Ads_Site.util.StandardResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,27 +12,24 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Optional;
-
 @RestController
-@RequestMapping("/api/v1/advertisement")
-public class AdvertisementController {
+@RequestMapping("/api/v1/category")
+public class CatController {
 
     @Autowired
-    private AdvertisementService advertisementService;
-
+    private CategoriesService categoriesService;
 
     @PostMapping
     @PreAuthorize("hasAuthority('customer:write')")
-    public ResponseEntity<StandardResponse> createAdvertisement(@RequestBody RequestAdvertisementDto advertisementDto) {
+    public ResponseEntity<StandardResponse> createCategory(@RequestBody RequestCategoryDto requestCategoryDto) {
 
+        // Consider adding validation for requestCategoryDto here
 
-
-        advertisementService.createAdvertisement(advertisementDto);
+        categoriesService.createCategory(requestCategoryDto);
 
         return new ResponseEntity<>(
-                new StandardResponse(200,"Advertisement created",advertisementDto.getTitle()),
-                HttpStatus.OK
+                new StandardResponse(200, "Category created", requestCategoryDto.getCategoryName()),
+                HttpStatus.CREATED
         );
     }
 }

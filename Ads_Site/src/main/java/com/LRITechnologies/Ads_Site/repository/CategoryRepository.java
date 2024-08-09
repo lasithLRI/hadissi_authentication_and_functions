@@ -1,0 +1,7 @@
+package com.LRITechnologies.Ads_Site.repository;
+
+import com.LRITechnologies.Ads_Site.entity.Category;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface CategoryRepository extends JpaRepository<Category,Long> {
+}
