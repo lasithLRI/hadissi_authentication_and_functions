@@ -1,9 +1,6 @@
 package com.LRITechnologies.Ads_Site.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Set;
@@ -24,7 +21,6 @@ public class Category {
     @OneToMany(mappedBy = "category")
     private Set<AdvertisementHasCategories> advertisementHasCategories;
 
-    @OneToMany(mappedBy = "category")
+    @OneToMany(mappedBy = "category",fetch = FetchType.EAGER)
     private Set<SubCategory> subCategoryHasCategory;
-
 }

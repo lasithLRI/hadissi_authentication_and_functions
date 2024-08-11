@@ -4,6 +4,7 @@ package com.LRITechnologies.Ads_Site.entity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Set;
@@ -11,6 +12,7 @@ import java.util.Set;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
 @Builder
 public class Advertisement {
     @Id

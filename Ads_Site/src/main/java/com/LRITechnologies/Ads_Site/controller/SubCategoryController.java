@@ -1,6 +1,7 @@
 package com.LRITechnologies.Ads_Site.controller;
 
 import com.LRITechnologies.Ads_Site.dto.request.RequestSubCategoryDto;
+import com.LRITechnologies.Ads_Site.dto.response.paginated.PaginatedSubcategoryResponseDto;
 import com.LRITechnologies.Ads_Site.service.SubCategoryService;
 import com.LRITechnologies.Ads_Site.util.StandardResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,33 +30,53 @@ public class SubCategoryController {
     }
 
     @GetMapping("/{id}")
-    public String findSubCategoryUnitById(@PathVariable String id){
+    @PreAuthorize("hasAuthority('customer:write')")
+    public ResponseEntity<StandardResponse> subCategoryUnitById(@PathVariable long id){
 
-    return "findSubCategoryUnitById";
+    return new ResponseEntity<>(
+            new StandardResponse(200,"Category found",subCategoryService.findSubCategoryUnitById(id)),
+            HttpStatus.OK
+        );
     }
 
     @PutMapping(params = "id")
-    public String updateSubcategoryUnit(
-            @PathVariable String id,
+    @PreAuthorize("hasAuthority('customer:write')")
+    public ResponseEntity<StandardResponse> updateSubcategoryUnit(
+            @PathVariable long id,
             @RequestBody RequestSubCategoryDto categoryDto
 
     ){
 
-        return categoryDto.getName();
+        subCategoryService.updateSubCategoryUnit(id, categoryDto);
+        return new ResponseEntity<>(
+                new StandardResponse(200,"Sub-category updated",categoryDto.getName()),
+                HttpStatus.OK
+        );
     }
 
     @DeleteMapping("/{id}")
-    public String deleteSubcategoryUnit(@PathVariable String id){
-        return "deleteSubcategoryUnit";
-    };
+    @PreAuthorize("hasAuthority('customer:write')")
+    public ResponseEntity<StandardResponse> deleteSubcategoryUnit(@PathVariable long id){
+
+        subCategoryService.deleteSubCategoryUnitById(id);
+
+        return new ResponseEntity<>(
+                new StandardResponse(204,"Sub-category deleted",id),
+                HttpStatus.NO_CONTENT
+        );
+    }
 
     @GetMapping(path = "/list", params = {"searchText", "page", "size"})
-    public String findAllSubCategories(
+    @PreAuthorize("hasAuthority('customer:write')")
+    public ResponseEntity<StandardResponse> findAllSubCategories(
             @RequestParam String searchText,
             @RequestParam int page,
             @RequestParam int size
     ){
-        return "findAllSubCategories";
+        return new ResponseEntity<>(
+                new StandardResponse(200,"subcategory search",subCategoryService.getSubCategoryUnits(searchText,page,size)),
+                HttpStatus.OK
+        );
     }
 
 }
