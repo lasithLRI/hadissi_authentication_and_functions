@@ -1,9 +1,6 @@
 package com.LRITechnologies.Ads_Site.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,11 +14,15 @@ public class Image {
     @GeneratedValue
     private Long id;
     private String imageUrl;
+    private String imageId;
 
     @ManyToOne
+    @JoinColumn(name = "advertisement_id", nullable = false)
     private Advertisement advertisement;
 
-    public Image(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public Image(String url, String id, Advertisement advertisement) {
+        this.imageUrl = url;
+        this.imageId = id;
+        this.advertisement = advertisement;
     }
 }

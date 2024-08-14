@@ -5,6 +5,9 @@ import com.LRITechnologies.Ads_Site.dto.response.ResponseAdvertisementDto;
 import com.LRITechnologies.Ads_Site.dto.response.paginated.PaginatedAdvertisementDto;
 import com.LRITechnologies.Ads_Site.dto.response.paginated.PaginatedSubcategoryResponseDto;
 import com.LRITechnologies.Ads_Site.entity.Advertisement;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 public interface AdvertisementService {
     public void createAdvertisement(RequestAdvertisementDto advertisementDto);

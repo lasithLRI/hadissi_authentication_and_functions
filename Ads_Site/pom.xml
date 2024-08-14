@@ -119,6 +119,6 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<finalName>hadissilk</finalName>
 	</build>
-
 </project>

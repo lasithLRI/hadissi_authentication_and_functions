@@ -1,6 +1,8 @@
 package com.LRITechnologies.Ads_Site.service.impl;
 
+import com.LRITechnologies.Ads_Site.repository.ImageRepository;
 import com.LRITechnologies.Ads_Site.service.ImageService;
+import com.LRITechnologies.Ads_Site.util.UploadedImageDetail;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,32 +20,41 @@ public class ImageServiceImpl implements ImageService {
     @Autowired
     private Cloudinary cloudinary;
 
+    @Autowired
+    private ImageRepository imageRepository;
+
     @Override
-    public List<String> uploadImage(List<MultipartFile> files) {
-        List<String> imageUrls = new ArrayList<>();
+    public List<UploadedImageDetail> uploadImage(List<MultipartFile> files) {
+        List<UploadedImageDetail> images = new ArrayList<>();
 
         for (MultipartFile file : files) {
 
             try {
 
                 Map uploadResult = cloudinary.uploader().upload(file.getBytes(), ObjectUtils.emptyMap());
-                imageUrls.add((String) uploadResult.get("secure_url"));
+                images.add(
+                        new UploadedImageDetail((String) uploadResult.get("secure_url"),(String) uploadResult.get("public_id"))
+                );
+
 
             }catch (IOException e){
                 throw new RuntimeException("Failed to upload image to Cloudinary");
             }
         }
 
-        return imageUrls;
+        return images;
     }
 
     @Override
-    public void deleteImage(String imageId) {
+    public void deleteImage(String imageId,long adId) {
         try {
             cloudinary.uploader().destroy(imageId, ObjectUtils.emptyMap());
         } catch (Exception e) {
             throw new RuntimeException("Error deleting image " + imageId, e);
         }
+
+        imageRepository.delete(imageRepository.getImageByImageIdAndAdvertisementId(imageId,adId));
+
     }
 
     @Override
@@ -63,10 +74,10 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
-    public void deleteListOfImages(List<String> imageIds) {
+    public void deleteListOfImages(List<String> imageIds,long adId) {
 
         for (String imageId : imageIds) {
-            deleteImage(imageId);
+            deleteImage(imageId,adId);
         }
 
     }

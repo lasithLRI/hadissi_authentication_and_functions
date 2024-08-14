@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Set;
 
@@ -22,7 +23,7 @@ public class Advertisement {
     private String description;
     private String contact;
     private String location;
-    private double price;
+    private BigDecimal price;
 
 
     @OneToMany(mappedBy = "advertisement")
@@ -32,9 +33,7 @@ public class Advertisement {
     @JoinColumn(name = "creator_id", nullable = false)
     private User creator;
 
-    @ManyToOne
-    @JoinColumn(name = "category_id", nullable = false)
-    private Category category;
+
 
     @ManyToOne
     @JoinColumn(name = "subcategory_id")
@@ -43,6 +42,5 @@ public class Advertisement {
     @OneToMany(mappedBy = "advertisement")
     private Set<UserHasAdvertisements> userHasAdvertisements ;
 
-    @OneToMany(mappedBy = "advertisement")
-    private Set<AdvertisementHasCategories> advertisementHasCategories;
+
 }

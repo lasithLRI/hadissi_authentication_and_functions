@@ -5,9 +5,13 @@ import com.LRITechnologies.Ads_Site.service.AdvertisementService;
 import com.LRITechnologies.Ads_Site.util.StandardResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/advertisement")
@@ -17,9 +21,11 @@ public class AdvertisementController {
     private AdvertisementService advertisementService;
 
 
-    @PostMapping
+    @PostMapping(value = "/create")
     @PreAuthorize("hasAuthority('customer:write')")
-    public ResponseEntity<StandardResponse> createAdvertisement(@RequestBody RequestAdvertisementDto advertisementDto) {
+    public ResponseEntity<StandardResponse> createAdvertisement(
+            @RequestBody  RequestAdvertisementDto advertisementDto
+    ) {
 
         advertisementService.createAdvertisement(advertisementDto);
 
@@ -70,8 +76,11 @@ public class AdvertisementController {
             @RequestParam int page,
             @RequestParam int size
     ) {
+
+        System.out.println(searchText);
+
         return new ResponseEntity<>(
-                new StandardResponse(200,"Advertisement updated",advertisementService.findAllAdvertisements(searchText,page,size)),
+                new StandardResponse(200,"Advertisement found",advertisementService.findAllAdvertisements(searchText,page,size)),
                 HttpStatus.OK
         );
     }

@@ -6,14 +6,12 @@ import com.LRITechnologies.Ads_Site.dto.response.ResponseSubCategoryDto;
 import com.LRITechnologies.Ads_Site.dto.response.paginated.PaginatedCategoryResponseDto;
 import com.LRITechnologies.Ads_Site.entity.Category;
 import com.LRITechnologies.Ads_Site.entity.SubCategory;
-import com.LRITechnologies.Ads_Site.repository.AdvertisementHasCategoriesRepository;
 import com.LRITechnologies.Ads_Site.repository.CategoryRepository;
 import com.LRITechnologies.Ads_Site.repository.SubCategoryRepo;
 import com.LRITechnologies.Ads_Site.service.CategoriesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +55,7 @@ public class CategoriesServiceImpl implements CategoriesService {
         Category category = optional.get();
 
 
-        List<SubCategory> subCategories = subCategoryRepo.getSubCategoriesByCategoryId(category.getId());
+        List<SubCategory> subCategories = subCategoryRepo.getCategoriesBySubCategoryId(category.getId());
 
         List<ResponseSubCategoryDto> subCategoryDtos = new ArrayList<>();
 
@@ -103,7 +101,7 @@ public class CategoriesServiceImpl implements CategoriesService {
             throw new RuntimeException("Category not found");
         }
 
-        List<SubCategory> subCategories = subCategoryRepo.getSubCategoriesByCategoryId(optional.get().getId());
+        List<SubCategory> subCategories = subCategoryRepo.getCategoriesBySubCategoryId(optional.get().getId());
 
         List<Long> subCategoryIds = subCategories.stream()
                 .map(SubCategory::getId)
@@ -133,7 +131,7 @@ public class CategoriesServiceImpl implements CategoriesService {
                                     category.getId(),
                                     category.getCategoryName(),
                                     category.getCategoryDescription(),
-                                    subCategoryRepo.getSubCategoriesByCategoryId(
+                                    subCategoryRepo.getCategoriesBySubCategoryId(
                                             category.getId()).stream().map(subCategory ->
                                             new ResponseSubCategoryDto(
                                                     subCategory.getId(),

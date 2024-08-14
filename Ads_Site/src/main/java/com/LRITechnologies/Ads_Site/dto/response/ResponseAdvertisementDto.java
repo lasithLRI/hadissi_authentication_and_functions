@@ -3,10 +3,12 @@ package com.LRITechnologies.Ads_Site.dto.response;
 import com.LRITechnologies.Ads_Site.entity.Image;
 import com.LRITechnologies.Ads_Site.entity.SubCategory;
 import com.LRITechnologies.Ads_Site.entity.User;
+import com.LRITechnologies.Ads_Site.util.UploadedImageDetail;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @AllArgsConstructor
@@ -18,9 +20,9 @@ public class ResponseAdvertisementDto {
     private String description;
     private String contact;
     private String location;
-    private List<Image> imagesUrls;
-    private User creator;
-    private SubCategory subCategory;
-    private double price;
+    private List<UploadedImageDetail> imagesUrls;
+    private String creator;
+    private String subCategory;
+    private BigDecimal price;
 
 }

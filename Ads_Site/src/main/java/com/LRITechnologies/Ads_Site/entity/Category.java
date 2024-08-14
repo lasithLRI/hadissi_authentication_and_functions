@@ -18,8 +18,6 @@ public class Category {
     private String categoryName;
     private String categoryDescription;
 
-    @OneToMany(mappedBy = "category")
-    private Set<AdvertisementHasCategories> advertisementHasCategories;
 
     @OneToMany(mappedBy = "category",fetch = FetchType.EAGER)
     private Set<SubCategory> subCategoryHasCategory;

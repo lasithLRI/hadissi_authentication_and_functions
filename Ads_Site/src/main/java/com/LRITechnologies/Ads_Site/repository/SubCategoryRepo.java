@@ -15,6 +15,6 @@ public interface SubCategoryRepo extends JpaRepository<SubCategory, Long> {
     @Query(value = "SELECT COUNT(*) FROM sub_category WHERE name LIKE ?1 OR description LIKE ?1",nativeQuery = true)
     public Long countSubCategories(String searchText);
 
-    @Query(value = "SELECT * FROM sub_category WHERE category_id LIKE ?1 ",nativeQuery = true)
-    public List<SubCategory> getSubCategoriesByCategoryId(long id);
+    @Query(value = "SELECT * FROM sub_category WHERE  LIKE ?1 ",nativeQuery = true)
+    public List<SubCategory> getCategoriesBySubCategoryId(long id);
 }
